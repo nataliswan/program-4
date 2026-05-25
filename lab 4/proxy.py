@@ -9,7 +9,7 @@ class Subject(ABC):
 
     @abstractmethod
     def request(self) -> None:
-        pass
+        raise NotImplementedError("Метод должен быть реализован в подклассе")
 
 class RealSubject(Subject):
     """
@@ -21,7 +21,7 @@ class RealSubject(Subject):
     """
 
     def request(self) -> None:
-        print("RealSubject: Handling request.")
+        print("RealSubject: Выполняет обработку запроса.")
 
 class Proxy(Subject):
     """
@@ -45,11 +45,11 @@ class Proxy(Subject):
             self.log_access()
 
     def check_access(self) -> bool:
-        print("Proxy: Checking access prior to firing a real request.")
+        print("Proxy: Выполняет проверку прав доступа.")
         return True
 
     def log_access(self) -> None:
-        print("Proxy: Logging the time of request.", end="")
+        print("Proxy: Фиксирует время выполнения запроса.", end="")
 
 def client_code(subject: Subject) -> None:
     """
@@ -68,12 +68,12 @@ def client_code(subject: Subject) -> None:
     # ...
 
 if __name__ == "__main__":
-    print("Client: Executing the client code with a real subject:")
+    print("Запуск кода с использованием реального субъекта:")
     real_subject = RealSubject()
     client_code(real_subject)
 
     print("")
 
-    print("Client: Executing the same client code with a proxy:")
+    print("Запуск кода с использованием Заместителя:")
     proxy = Proxy(real_subject)
     client_code(proxy)
